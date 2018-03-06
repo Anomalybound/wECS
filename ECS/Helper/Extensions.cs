@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using AgentProcessor.Core;
+using wECS.Core;
 using UnityEngine;
 
-namespace AgentProcessor.Helper
+namespace wECS.Helper
 {
     public static class Extensions
     {

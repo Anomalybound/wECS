@@ -1,35 +1,74 @@
 ﻿using System;
 using System.Collections.Generic;
+using wECS.Helper;
 
-namespace AgentProcessor.Core
+namespace wECS.Core
 {
     public class Matcher<T> : IMatcher where T : IEntity, new()
     {
-        private static readonly Dictionary<Grouper, Matcher<T>> MatchCaches = new Dictionary<Grouper, Matcher<T>>();
+        public readonly List<Type> Include;
+        public readonly List<Type> Exclude;
 
-        public static Matcher<T> GetMatcher(Grouper grouper)
+        private static readonly List<Matcher<T>> groups = new List<Matcher<T>>();
+        private static readonly TypeCompare comparer = new TypeCompare();
+
+        public static Matcher<T> Get(params Type[] types)
         {
-            Matcher<T> cacheMatcher;
-            if (MatchCaches.ContainsKey(grouper))
-            {
-                cacheMatcher = MatchCaches[grouper];
-            }
-            else
-            {
-                cacheMatcher = new Matcher<T>(grouper);
-                MatchCaches.Add(grouper, cacheMatcher);
-            }
-
-            return cacheMatcher;
+            return Get(new List<Type>(types));
         }
 
-        private readonly Grouper grouper;
+        public static Matcher<T> Get(List<Type> include, List<Type> exclude = null)
+        {
+            if (include != null)
+            {
+                include.Sort(comparer);
+            }
+
+            if (exclude != null)
+            {
+                exclude.Sort(comparer);
+            }
+
+            for (var i = 0; i < groups.Count; i++)
+            {
+                var group = groups[i];
+                if (group.Include.SortedListEquals(include) &&
+                    group.Exclude.SortedListEquals(exclude))
+                {
+                    return group;
+                }
+            }
+
+            var newGroup = new Matcher<T>(include, exclude);
+            groups.Add(newGroup);
+
+            return newGroup;
+        }
+
+        private T first;
 
         public readonly List<T> All = new List<T>();
 
-        protected Matcher(Grouper grouper)
+        public T First
         {
-            this.grouper = grouper;
+            get
+            {
+                if (first == null)
+                {
+                    if (All.Count > 0)
+                    {
+                        first = All[0];
+                    }
+                }
+
+                return first;
+            }
+        }
+
+        protected Matcher(List<Type> include, List<Type> exclude)
+        {
+            Include = include;
+            Exclude = exclude;
 
             SystemRunner<T>.OnAgentAdded += OnAgentCreated;
             SystemRunner<T>.OnAgentRemoved += OnAgentReleased;
@@ -37,11 +76,28 @@ namespace AgentProcessor.Core
             SystemRunner<T>.OnRemoveComponent += ProcessRemovedComponent;
         }
 
+        public override bool Equals(object obj)
+        {
+            var matcher = obj as Matcher<T>;
+            if (matcher != null)
+            {
+                if (matcher.Include.SortedListEquals(Include) &&
+                    matcher.Exclude.SortedListEquals(Exclude))
+                {
+                    return true;
+                }
+
+                return false;
+            }
+
+            return false;
+        }
+
         private void OnAgentCreated(T agent)
         {
-            if (agent.Has(grouper.Include))
+            if (agent.Has(Include))
             {
-                if (agent.Any(grouper.Exclude))
+                if (agent.Any(Exclude))
                 {
                     return;
                 }
@@ -57,7 +113,7 @@ namespace AgentProcessor.Core
                 return;
             }
 
-            if (agent.Any(grouper.Include))
+            if (agent.Any(Include))
             {
                 All.Remove(agent);
             }
@@ -65,15 +121,15 @@ namespace AgentProcessor.Core
 
         private void ProcessRemovedComponent(Type type, T agent)
         {
-            if (grouper.Exclude != null)
+            if (Exclude != null)
             {
-                if (grouper.Exclude.Contains(type))
+                if (Exclude.Contains(type))
                 {
                     return;
                 }
             }
 
-            if (grouper.Include.Contains(type))
+            if (Include.Contains(type))
             {
                 All.Remove(agent);
             }
@@ -81,19 +137,19 @@ namespace AgentProcessor.Core
 
         private void ProcessAddedComponent(Type type, T agent)
         {
-            if (grouper.Exclude != null)
+            if (Exclude != null)
             {
-                if (grouper.Exclude.Contains(type))
+                if (Exclude.Contains(type))
                 {
                     return;
                 }
             }
 
-            if (grouper.Include.Contains(type))
+            if (Include.Contains(type))
             {
-                for (var i = 0; i < grouper.Include.Count; i++)
+                for (var i = 0; i < Include.Count; i++)
                 {
-                    if (!agent.Has(grouper.Include[i]))
+                    if (!agent.Has(Include[i]))
                     {
                         return;
                     }

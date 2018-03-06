@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
-using AgentProcessor.Core;
-using Assets.Dev.Scripts.AgentProcessor.Implementation;
+using wECS.Core;
+using Assets.Dev.Scripts.wECS.Implementation;
 using UnityEditor;
 using UnityEngine;
 
@@ -26,14 +26,14 @@ public class GameControllerInspector : Editor
         
         EditorGUILayout.Space();
 
-        if (systemRunner.Processors.Count <= 0)
+        if (systemRunner.Systems.Count <= 0)
         {
             return;
         }
 
         using (new GUILayout.VerticalScope(EditorStyles.helpBox))
         {
-            foreach (var item in systemRunner.Processors)
+            foreach (var item in systemRunner.Systems)
             {
                 var key = item.Key;
                 var value = item.Value;
@@ -49,8 +49,8 @@ public class GameControllerInspector : Editor
 
         for (var i = 0; i < toggleList.Count; i++)
         {
-            var value = systemRunner.Processors[toggleList[i]];
-            systemRunner.Processors[toggleList[i]] = !value;
+            var value = systemRunner.Systems[toggleList[i]];
+            systemRunner.Systems[toggleList[i]] = !value;
         }
 
         toggleList.Clear();

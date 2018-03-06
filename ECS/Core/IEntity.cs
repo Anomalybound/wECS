@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace AgentProcessor.Core
+namespace wECS.Core
 {
     public interface IEntity
     {

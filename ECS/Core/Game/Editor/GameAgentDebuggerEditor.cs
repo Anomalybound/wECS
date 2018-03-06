@@ -1,6 +1,6 @@
 ﻿using UnityEditor;
 
-namespace AgentProcessor.Core
+namespace wECS.Core
 {
     [CustomEditor(typeof(GameEntityDebugger))]
     public class GameAgentDebuggerEditor : AgentDebuggerEditor<GameEntityDebugger, GameEntity> { }

@@ -1,5 +1,5 @@
-﻿using AgentProcessor.Core;
-using AgentProcessor.Helper;
+﻿using wECS.Core;
+using wECS.Helper;
 using UnityEngine;
 
 public abstract class GameSystemRunner : SystemRunner<GameEntity>
@@ -8,12 +8,13 @@ public abstract class GameSystemRunner : SystemRunner<GameEntity>
 
     private Transform DebuggerRoot;
 
-    private void Start()
+    protected override void Awake()
     {
         if (AgentDebugger)
         {
-            DebuggerRoot = new GameObject("Game Agents").transform;
+            DebuggerRoot = new GameObject("Game Entities").transform;
         }
+        base.Awake();
     }
 
     protected override void OnDebugAgentAdded(GameEntity entity)

@@ -1,4 +1,4 @@
-﻿namespace AgentProcessor.Core
+﻿namespace wECS.Core
 {
     public interface IComponent { }
 }

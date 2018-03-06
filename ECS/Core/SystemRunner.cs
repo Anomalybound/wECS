@@ -1,20 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
-using AgentProcessor.Helper;
-using UnityEditor;
+using wECS.Helper;
 using UnityEngine;
+#if UNITY_EDITOR
+using UnityEditor;
 
-namespace AgentProcessor.Core
+#endif
+
+namespace wECS.Core
 {
     public abstract class SystemRunner<T> : MonoBehaviour where T : IEntity, new()
     {
+#if UNITY_EDITOR
         public bool AgentDebugger
         {
             get { return EditorPrefs.GetBool("EnableDebugger"); }
             set { EditorPrefs.SetBool("EnableDebugger", value); }
         }
+#endif
 
-        #region Agents
+        #region Entities
 
         private static long AgentId;
 
@@ -26,7 +31,7 @@ namespace AgentProcessor.Core
 
         public static readonly Dictionary<Type, List<T>> ComponentsLookup = new Dictionary<Type, List<T>>();
 
-        public static T CreateAgent()
+        public static T CreateEntity()
         {
             T agent;
             if (AgentPool.Count > 0)
@@ -83,13 +88,13 @@ namespace AgentProcessor.Core
 
         #region Processor
 
-        public readonly Processors Processors = new Processors();
+        public readonly Systems Systems = new Systems();
 
         protected abstract void SetupProcessors();
 
         #endregion
 
-        private void Awake()
+        protected virtual void Awake()
         {
             SetupProcessors();
 #if UNITY_EDITOR
@@ -103,7 +108,12 @@ namespace AgentProcessor.Core
 
         private void Update()
         {
-            Processors.Execute();
+            Systems.Execute();
+        }
+
+        private void FixedUpdate()
+        {
+            Systems.FixedExecute();
         }
 
 #if UNITY_EDITOR

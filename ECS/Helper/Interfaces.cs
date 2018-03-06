@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace AgentProcessor.Helper
+namespace wECS.Helper
 {
     public class TypeCompare : IComparer<Type>
     {

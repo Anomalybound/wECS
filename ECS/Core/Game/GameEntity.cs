@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using AgentProcessor.Core;
+using wECS.Core;
 using UnityEngine;
 
 [Serializable]

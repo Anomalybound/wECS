@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Reflection;
-using AgentProcessor.Core;
-using AgentProcessor.Helper;
+using wECS.Core;
+using wECS.Helper;
 using UnityEditor;
 using UnityEngine;
 

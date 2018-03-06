@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using AgentProcessor.Helper;
+using wECS.Helper;
 using UnityEditor;
 
-namespace AgentProcessor.Core
+namespace wECS.Core
 {
     public static class GameDebugger
     {

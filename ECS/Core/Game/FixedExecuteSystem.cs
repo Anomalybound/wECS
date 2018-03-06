@@ -3,11 +3,11 @@ using System.Collections.Generic;
 
 namespace wECS.Core
 {
-    public abstract class ExecuteSystem<T1> : IExecuteSystem where T1 : IComponent
+    public abstract class FixedExecuteSystem<T1> : IFixedExecuteSystem where T1 : IComponent
     {
         protected readonly List<GameEntity> Entities;
 
-        protected ExecuteSystem()
+        protected FixedExecuteSystem()
         {
             Entities = GameMatcher.Get(new List<Type>
             {
@@ -15,14 +15,14 @@ namespace wECS.Core
             }).All;
         }
 
-        public abstract void Execute();
+        public abstract void FixedExecute();
     }
 
-    public abstract class ExecuteSystem<T1, T2> : IExecuteSystem where T1 : IComponent where T2 : IComponent
+    public abstract class FixedExecuteSystem<T1, T2> : IFixedExecuteSystem where T1 : IComponent where T2 : IComponent
     {
         protected readonly List<GameEntity> Entities;
 
-        protected ExecuteSystem()
+        protected FixedExecuteSystem()
         {
             Entities = GameMatcher.Get(new List<Type>
             {
@@ -31,15 +31,15 @@ namespace wECS.Core
             }).All;
         }
 
-        public abstract void Execute();
+        public abstract void FixedExecute();
     }
 
-    public abstract class ExecuteSystem<T1, T2, T3> : IExecuteSystem
+    public abstract class FixedExecuteSystem<T1, T2, T3> : IFixedExecuteSystem
         where T1 : IComponent where T2 : IComponent where T3 : IComponent
     {
         protected readonly List<GameEntity> Entities;
 
-        protected ExecuteSystem()
+        protected FixedExecuteSystem()
         {
             Entities = GameMatcher.Get(new List<Type>
             {
@@ -49,15 +49,15 @@ namespace wECS.Core
             }).All;
         }
 
-        public abstract void Execute();
+        public abstract void FixedExecute();
     }
 
-    public abstract class ExecuteSystem<T1, T2, T3, T4> : IExecuteSystem
+    public abstract class FixedExecuteSystem<T1, T2, T3, T4> : IFixedExecuteSystem
         where T1 : IComponent where T2 : IComponent where T3 : IComponent where T4 : IComponent
     {
         protected readonly List<GameEntity> Entities;
 
-        protected ExecuteSystem()
+        protected FixedExecuteSystem()
         {
             Entities = GameMatcher.Get(new List<Type>
             {
@@ -68,6 +68,6 @@ namespace wECS.Core
             }).All;
         }
 
-        public abstract void Execute();
+        public abstract void FixedExecute();
     }
 }
