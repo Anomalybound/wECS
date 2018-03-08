@@ -135,13 +135,13 @@ public class GameEntity : IEntity
 
     public void Update()
     {
-        Components.ForEach(x =>
+        foreach (var x in Components)
         {
             if (GameSystemRunner.OnUpdateComponent != null)
             {
                 GameSystemRunner.OnUpdateComponent.Invoke(x.Key, this);
             }
-        });
+        }
     }
 
     public void Update<T>() where T : IComponent

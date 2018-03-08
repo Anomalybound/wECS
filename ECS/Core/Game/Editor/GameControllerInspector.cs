@@ -1,10 +1,9 @@
 ﻿using System.Collections.Generic;
 using wECS.Core;
-using Assets.Dev.Scripts.wECS.Implementation;
 using UnityEditor;
 using UnityEngine;
 
-[CustomEditor(typeof(GameController))]
+[CustomEditor(typeof(GameSystemRunner))]
 public class GameControllerInspector : Editor
 {
     private GameSystemRunner systemRunner;

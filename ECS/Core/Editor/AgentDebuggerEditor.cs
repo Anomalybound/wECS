@@ -37,7 +37,7 @@ public class AgentDebuggerEditor<T, W> : Editor where T : EntityDebugger<W> wher
         EditorGUILayout.LabelField(string.Format("Agent has {0} components.", AgentDebugger.Agent.Components.Count));
         EditorGUILayout.Space();
 
-        AgentDebugger.Agent.Components.ForEach(x =>
+        foreach (var x in AgentDebugger.Agent.Components)
         {
             var type = x.Key.UnderlyingSystemType;
             var allMembers = GameDebugger.GetMembers(type);
@@ -71,7 +71,7 @@ public class AgentDebuggerEditor<T, W> : Editor where T : EntityDebugger<W> wher
                                 var value = childMember.GetValue(rootValue);
                                 if (childMember.CanWrite())
                                 {
-                                    using (new EditorGUI.DisabledScope())
+                                    using (new EditorGUI.DisabledScope(true))
                                     {
                                         childDrawer.DrawAndGetNewValue(childMemberType, childMembers[j].Name,
                                             value, target);
@@ -79,7 +79,8 @@ public class AgentDebuggerEditor<T, W> : Editor where T : EntityDebugger<W> wher
                                 }
                                 else
                                 {
-                                    var newValue = childDrawer.DrawAndGetNewValue(childMemberType, childMembers[j].Name,
+                                    var newValue = childDrawer.DrawAndGetNewValue(childMemberType,
+                                        childMembers[j].Name,
                                         value, target);
                                     childMember.SetValue(x.Value, newValue, null);
                                 }
@@ -116,6 +117,6 @@ public class AgentDebuggerEditor<T, W> : Editor where T : EntityDebugger<W> wher
             }
 
             EditorGUI.indentLevel--;
-        });
+        }
     }
 }
