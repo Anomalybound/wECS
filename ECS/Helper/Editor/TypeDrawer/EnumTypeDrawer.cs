@@ -1,3 +1,4 @@
+#if UNITY_EDITOR
 using System;
 using UnityEditor;
 
@@ -18,3 +19,4 @@ public class EnumTypeDrawer : ITypeDrawer
         return EditorGUILayout.EnumPopup(memberName, (Enum) value);
     }
 }
+#endif

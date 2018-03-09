@@ -1,3 +1,4 @@
+#if UNITY_EDITOR
 using System;
 using UnityEditor;
 
@@ -14,3 +15,4 @@ public class CharTypeDrawer : ITypeDrawer
         return str.Length > 0 ? str[0] : default(char);
     }
 }
+#endif

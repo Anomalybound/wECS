@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+#if UNITY_EDITOR
+using System.Collections.Generic;
 using wECS.Core;
 using UnityEditor;
 using UnityEngine;
@@ -55,3 +56,4 @@ public class GameControllerInspector : Editor
         toggleList.Clear();
     }
 }
+#endif

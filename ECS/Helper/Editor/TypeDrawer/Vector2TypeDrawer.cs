@@ -1,3 +1,4 @@
+#if UNITY_EDITOR
 using System;
 using UnityEditor;
 using UnityEngine;
@@ -14,3 +15,4 @@ public class Vector2TypeDrawer : ITypeDrawer
         return EditorGUILayout.Vector2Field(memberName, (Vector2) value);
     }
 }
+#endif

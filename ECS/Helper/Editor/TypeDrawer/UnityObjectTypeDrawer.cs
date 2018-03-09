@@ -1,3 +1,4 @@
+#if UNITY_EDITOR
 using System;
 using UnityEditor;
 
@@ -14,3 +15,4 @@ public class UnityObjectTypeDrawer : ITypeDrawer
         return EditorGUILayout.ObjectField(memberName, (UnityEngine.Object) value, memberType, true);
     }
 }
+#endif

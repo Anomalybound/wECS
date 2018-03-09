@@ -1,4 +1,5 @@
-﻿using System;
+#if UNITY_EDITOR
+using System;
 using System.Collections.Generic;
 using System.Reflection;
 using wECS.Core;
@@ -120,3 +121,4 @@ public class AgentDebuggerEditor<T, W> : Editor where T : EntityDebugger<W> wher
         }
     }
 }
+#endif

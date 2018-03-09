@@ -1,3 +1,4 @@
+#if UNITY_EDITOR
 using System;
 using UnityEditor;
 
@@ -13,3 +14,4 @@ public class DoubleTypeDrawer : ITypeDrawer
         return EditorGUILayout.DoubleField(memberName, (double) value);
     }
 }
+#endif

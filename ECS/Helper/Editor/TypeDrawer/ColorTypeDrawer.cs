@@ -1,3 +1,4 @@
+#if UNITY_EDITOR
 using System;
 using UnityEditor;
 using UnityEngine;
@@ -14,3 +15,4 @@ public class ColorTypeDrawer : ITypeDrawer
         return EditorGUILayout.ColorField(memberName, (Color) value);
     }
 }
+#endif
